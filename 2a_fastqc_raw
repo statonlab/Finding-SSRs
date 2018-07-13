@@ -1,0 +1,5 @@
+for f in `ls ../../raw_reads | grep R`
+do
+	/lustre/projects/staton/software/FastQC-v0.11.4/fastqc \
+	-o $(pwd) -f fastq ../raw_reads/$f >& fqc.out &
+done
