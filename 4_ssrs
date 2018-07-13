@@ -1,0 +1,23 @@
+# Create a symbolic link for ABySS's scaffold files
+for f in $(ls ../3_abyss/ | grep unit)
+do 
+        ln -s ../3_abyss/$f $(sed 's/-trimmed//' <(echo $f))
+done
+
+# Use dustmasker to mask out low complexity regions of the genome; this creates a masked input file used by the ssr script to search for SSRs
+for f in $(ls *.fa)
+do 
+        dustmasker \
+        -in $f \
+        -out $f.masked \
+        -outfmt fasta \
+        -level 1 & 
+done
+
+# Finally, use the perl script to identify SSRs. This program requires three perl modules - Getopt::Long, Bio::SeqIO, and Excel::Writer::XLSX - as well as Primer3
+for f in $(ls *.fa)
+do 
+        perl findSSRs_altered.pl \
+        -f $f \
+        -m $f.masked & 
+done
