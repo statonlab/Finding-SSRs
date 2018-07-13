@@ -1,14 +1,14 @@
-# -l determines the minimum length for filtering; in this case, nothing under 30 bp will be included in the trimmed files
+# -l determines the minimum length for filtering; in this case, nothing under 30 bp will be included in the trimmed files.
 # -m determines the trimming method; in this case, 'pe' means 'paired-end'
-# -x defines a fasta file containing the sequences for adapters skewer will search for and trim
+# -x defines a fasta file containing the sequences for adapters Skewer will trim. The list used in this example came from Trimmomatic, a separate trimming software.
 
 for R1 in `ls ../../raw_data | grep R1`
 do
 	R2=`sed 's/R1/R2/' <( echo $R1 )`
 	BASE=$( basename $R1 | sed 's/_L00.*//g')
-	/staton/software/skewer/skewer \
+	skewer \
 	-l 30 -m pe -o $BASE --mean-quality 30 --end-quality 30 -t 4 \
-	-x /staton/software/Trimmomatic-0.35/adapters/illuminaClipping.fa \
+	-x Trimmomatic-0.35/adapters/illuminaClipping.fa \
 	../../raw_data/$R1 \
 	../../raw_data/$R2 >& $BASE.out &
 done
