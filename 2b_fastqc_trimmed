@@ -1,0 +1,7 @@
+# Running fastqc on both raw and trimmed reads will allow you to confirm the removal of adaptor sequences
+
+for f in `ls ../1_trimming | grep fastq`
+do
+	/lustre/projects/staton/software/FastQC-v0.11.4/fastqc \
+	-o $(pwd) -f fastq ../1_trimming/$f >&fqc.out &
+done
