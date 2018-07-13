@@ -1,0 +1,7 @@
+# Abyss assembles short reads into a long genome; the output of abyss will be used to identify SSRs
+
+abyss-pe \
+name=$f np=8 k=64 \
+in="../1_trimming/$f-pair1.fastq ../1_trimming/$f-pair2.fastq" \
+>& $f.out &
+done
